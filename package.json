@@ -20,6 +20,9 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@ethercorps/sveltekit-og": "^2.0.1"
+		"@ethercorps/sveltekit-og": "^2.0.1",
+		"@types/jsonwebtoken": "^9.0.2",
+		"dotenv": "^16.3.1",
+		"jsonwebtoken": "^9.0.1"
 	}
 }

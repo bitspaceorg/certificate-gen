@@ -1,5 +1,8 @@
 import { ImageResponse } from '@ethercorps/sveltekit-og';
 import type { RequestHandler } from '@sveltejs/kit';
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+dotenv.config()
 
 const template = (name: String, date: String, event: String, venue: String, partneredWith: String | null) => {
     return `
@@ -43,12 +46,15 @@ const fontFile = await fetch('https://cdn.discordapp.com/attachments/10897627763
 const fontData: ArrayBuffer = await fontFile.arrayBuffer();
 
 export const GET: RequestHandler = async ({ url }) => {
-    const name = url.searchParams.get('name') || 'Rahul M Navneeth';
-    const date = url.searchParams.get('date') || '69/69/69';
-    const event = url.searchParams.get('event') || 'Byte Con 100';
-    const venue = url.searchParams.get('venue') || 'Chennai Institute of Technology';
-    const partneredWith = url.searchParams.get('partneredWith') || null;
-    return await ImageResponse(template(name, date, event, venue, partneredWith), {
+    const code = url.searchParams.get('code') || "";
+    let data: any = {};
+    jwt.verify(code, process.env.JWT_PASS || "", (err: any, decoded: any) => {
+        if (!err) {
+            data = decoded;
+        }
+    })
+    console.log(data)
+    return await ImageResponse(template(data.name || "BITSPACE", data.date || "69/69/69", data.event || "ByteCon 1xx", data.venue || "BSLAB", data.partneredWith || null), {
         height: 768,
         width: 1024,
         fonts: [
