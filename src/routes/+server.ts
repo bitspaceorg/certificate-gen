@@ -53,7 +53,6 @@ export const GET: RequestHandler = async ({ url }) => {
             data = decoded;
         }
     })
-    console.log(data)
     return await ImageResponse(template(data.name || "BITSPACE", data.date || "69/69/69", data.event || "ByteCon 1xx", data.venue || "BSLAB", data.partneredWith || null), {
         height: 768,
         width: 1024,
